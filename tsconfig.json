@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+      "target": "ES2017",
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "lib": ["ESNext"],
+      "strict": true,
+      "strictNullChecks": false,
+      "sourceMap": true,
+      "importHelpers": false,
+      "experimentalDecorators": true,
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "esModuleInterop": true,
+      "jsx": "react",
+      "allowJs": true,
+      "declaration": true,
+      "outDir": "./dist",
+      "baseUrl": "./",
+      "resolveJsonModule": true,
+      "paths": {
+        "@src/*": ["src/*"]
+      }
+    },
+    "include": ["./src"]
+  }
