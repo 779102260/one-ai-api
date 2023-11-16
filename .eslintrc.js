@@ -14,7 +14,7 @@ module.exports = {
     'prettier/prettier': [
       process.env.NODE_ENV === 'production' ? 'off' : 'error',
       {
-        printWidth: 100,
+        printWidth: 120,
         endOfLine: 'auto',
         semi: false,
         singleQuote: true,
