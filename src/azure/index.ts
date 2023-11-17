@@ -42,5 +42,10 @@ export async function ask(prompt: string, endPoint = END_POINT, apiKey = API_KEY
     return Promise.reject(error)
   }
 }
+export type IAskConfig = {
+  prompt: string
+  endPoint?: string
+  apiKey?: string
+}
 
 // conversation("Hello, world!").then(response => console.log(response));

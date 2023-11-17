@@ -54,3 +54,9 @@ export async function ask(prompt: string, orgId = ORG_ID, sessionKey = SESSION_K
 
   return answer
 }
+
+export type IAskConfig = {
+  prompt: string
+  orgId?: string
+  sessionKey?: string
+}

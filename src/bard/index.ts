@@ -10,3 +10,7 @@ export async function ask(prompt: string, secure1psid = SECURE_1PSID) {
   const conversationId = Math.random().toString(36).slice(2)
   return await bot.ask(prompt, conversationId)
 }
+export type IAskConfig = {
+  prompt: string
+  secure1psid?: string
+}
