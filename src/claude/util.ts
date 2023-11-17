@@ -20,13 +20,6 @@ export function formatConversion(result: any) {
   }
 }
 
-interface Message {
-  role: string
-  content: string
-  name?: string
-  function_call?: object
-}
-
 /**
  * openai 请求体格式转为 cluade 请求体格式
  */
@@ -160,4 +153,11 @@ export async function readerStream(response: any) {
   }
 
   return claudeToOpenaiResponse(content)
+}
+
+interface Message {
+  role: string
+  content: string
+  name?: string
+  function_call?: object
 }

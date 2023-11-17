@@ -6,6 +6,12 @@ const ORG_ID = process.env.ORG_ID
 const SESSION_KEY = process.env.SESSION_KEY
 const CLAUDE_DEFAULT_CONVERSATION_NAME = 'claude'
 
+/**
+ * 单次对话，无上下文，无stream
+ * @param prompt 问题
+ * @param orgId ORG_ID 应该从环境变量中获取
+ * @param sessionKey SESSION_KEY 应该从环境变量中获取
+ */
 export async function ask(prompt: string, orgId = ORG_ID, sessionKey = SESSION_KEY) {
   if (!prompt || !orgId || !sessionKey) {
     throw new Error('参数错误')
