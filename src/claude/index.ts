@@ -29,7 +29,7 @@ export async function ask(prompt: string, orgId = ORG_ID, sessionKey = SESSION_K
   })
 
   //   发送请求
-  const options = Util.openaiToClaudeRequest(
+  const body = Util.openaiToClaudeRequest(
     [
       {
         role: 'user',

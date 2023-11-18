@@ -31,22 +31,15 @@ export const openaiToClaudeRequest = (
 ) => {
   const prompt: string = generatePrompt(messages)
   return {
-    method: 'POST',
-    headers: {
-      Cookie: `sessionKey=Bearer ${sessionKey}`,
+    completion: {
+      prompt: prompt,
+      timezone: 'Asia/Shanghai',
+      model: 'claude-2',
     },
-    redirect: 'follow',
-    body: JSON.stringify({
-      completion: {
-        prompt: prompt,
-        timezone: 'Asia/Shanghai',
-        model: 'claude-2',
-      },
-      organization_uuid: orgId,
-      conversation_uuid: conversationId,
-      text: prompt,
-      attachments: [],
-    }),
+    organization_uuid: orgId,
+    conversation_uuid: conversationId,
+    text: prompt,
+    attachments: [],
   }
 }
 
