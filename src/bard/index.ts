@@ -10,7 +10,7 @@ export async function ask(prompt: string, secure1psid = SECURE_1PSID, secure1psi
     throw new Error('Missing required prompt or secure1psid')
   }
 
-  const cookies = `__Secure-1PSID=${secure1psid}; __Secure-1PSIDTS=${secure1psidts}`
+  const cookies = `__Secure-1PSID=${secure1psid};__Secure-1PSIDTS=${secure1psidts}`
   const bot = new Bard(cookies)
 
   // 使用lodash生成随机字符串充当会话id (如果需要记忆会话，需要携带id)
@@ -22,6 +22,7 @@ export async function ask(prompt: string, secure1psid = SECURE_1PSID, secure1psi
 export type IAskConfig = {
   prompt: string
   secure1psid?: string
+  secure1psidts?: string
 }
 
 // 不支持中文
