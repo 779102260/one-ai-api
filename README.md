@@ -1,4 +1,6 @@
-all ai api in 1, support openai/azure/claude/bard 
+Combines multiple AI interfaces into one, support openai/azure/claude/bard.
+
+Currently does not support streaming. If you are interested, you can submit a merge request (MR). 
 
 ## useage
 
