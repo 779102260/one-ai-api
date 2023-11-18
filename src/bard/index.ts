@@ -1,11 +1,11 @@
 import { v1beta2 } from '@google-ai/generativelanguage'
 import { GoogleAuth } from 'google-auth-library'
 
-const API_KEY = process.env.API_KEY || 'AIzaSyBJytIY1nfQeX_JdXF3BlDtpQ3lxJ7Zed4'
+const API_KEY = process.env.API_KEY
 
 export async function ask(prompt: string, apiKey = API_KEY) {
-  if (!apiKey) {
-    throw new Error('Missing required API_KEY')
+  if (!prompt || !apiKey) {
+    throw new Error('Missing required prompt or API_KEY')
   }
 
   const client = new v1beta2.TextServiceClient({
@@ -20,7 +20,6 @@ export async function ask(prompt: string, apiKey = API_KEY) {
       },
     })
     .then((result) => {
-      console.log(JSON.stringify(result, null, 2))
       return result
     })
 

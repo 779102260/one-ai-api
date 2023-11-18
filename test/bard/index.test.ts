@@ -4,7 +4,7 @@ import { API_KEY } from './env'
 
 describe.only('ask function', () => {
   it('should throw an error if apiKey are missing', async () => {
-    await expect(ask('hello')).rejects.toThrowError('Missing required API_KEY')
+    await expect(ask('hello')).rejects.toThrowError('Missing required prompt or API_KEY')
   })
 
   //   国内调不通，超时
