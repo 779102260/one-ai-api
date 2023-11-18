@@ -1,16 +1,34 @@
-import { Bard } from 'googlebard'
+import { v1beta2 } from '@google-ai/generativelanguage'
+import { GoogleAuth } from 'google-auth-library'
 
-const SECURE_1PSID = process.env.SECURE_1PSID
+const API_KEY = process.env.API_KEY || 'AIzaSyBJytIY1nfQeX_JdXF3BlDtpQ3lxJ7Zed4'
 
-export async function ask(prompt: string, secure1psid = SECURE_1PSID) {
-  const cookies = `__Secure-1PSID=${secure1psid}`
-  const bot = new Bard(cookies)
+export async function ask(prompt: string, apiKey = API_KEY) {
+  if (!apiKey) {
+    throw new Error('Missing required API_KEY')
+  }
 
-  // 使用lodash生成随机字符串充当会话id (如果需要记忆会话，需要携带id)
-  const conversationId = Math.random().toString(36).slice(2)
-  return await bot.ask(prompt, conversationId)
+  const client = new v1beta2.TextServiceClient({
+    authClient: new GoogleAuth().fromAPIKey(apiKey),
+  })
+
+  const res = await client
+    .generateText({
+      model: 'models/text-bison-001',
+      prompt: {
+        text: prompt,
+      },
+    })
+    .then((result) => {
+      console.log(JSON.stringify(result, null, 2))
+      return result
+    })
+
+  return res[0].candidates[0].output
 }
 export type IAskConfig = {
   prompt: string
-  secure1psid?: string
+  apiKey?: string
 }
+
+// ask('Hello, world!').then(console.log)

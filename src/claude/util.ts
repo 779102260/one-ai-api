@@ -16,7 +16,7 @@ export function formatConversion(result: any) {
       })
     return content
   } catch (err: any) {
-    throw new Error(result.error.message)
+    throw new Error(`claude api 响应格式解析错误: ${err.message}`)
   }
 }
 
@@ -74,7 +74,7 @@ export const openaiToClaudeRequest = (
     你好，介绍下自己
  ```
  */
-const generatePrompt = (messages: Message[]) => {
+export const generatePrompt = (messages: Message[]) => {
   if (messages.length < 1) {
     throw new Error('Request body parameter error, please check if messages is missing.')
   }

@@ -21,6 +21,6 @@ export async function askAuto(prompt: string, config: IConfig) {
     return Claude.ask(prompt, config.claude.orgId, config.claude.sessionKey)
   }
   if (config.bard) {
-    return Bard.ask(prompt, config.bard.secure1psid)
+    return Bard.ask(prompt, config.bard.apiKey)
   }
 }

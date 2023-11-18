@@ -2,8 +2,8 @@ import * as Completions from './completions'
 import initCycleTLS from 'cycletls'
 import * as Util from './util'
 
-const ORG_ID = process.env.ORG_ID
-const SESSION_KEY = process.env.SESSION_KEY
+const ORG_ID = process.env.ORG_ID // 从Claude官网中的/ORG_ID/chat_conversations接口中获取
+const SESSION_KEY = process.env.SESSION_KEY // 从cookie中获取
 const CLAUDE_DEFAULT_CONVERSATION_NAME = 'claude'
 
 /**

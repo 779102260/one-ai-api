@@ -37,4 +37,4 @@ export type IAskConfig = {
   apiKey?: string
 }
 
-// conversation("Hello, world!").then(response => console.log(response));
+// ask('Hello, world!').then((response) => console.log(response))
