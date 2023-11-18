@@ -3,14 +3,14 @@ import { GoogleAuth } from 'google-auth-library'
 import { Bard } from 'googlebard'
 
 const SECURE_1PSID = process.env.SECURE_1PSID
+const SECURE_1PSIDTS = process.env.SECURE_1PSIDTS
 
-export async function ask(prompt: string, secure1psid = SECURE_1PSID) {
+export async function ask(prompt: string, secure1psid = SECURE_1PSID, secure1psidts = SECURE_1PSIDTS) {
   if (!prompt || !secure1psid) {
     throw new Error('Missing required prompt or secure1psid')
   }
 
-  const cookies = `__Secure-1PSID=${secure1psid}`
-  console.log(cookies)
+  const cookies = `__Secure-1PSID=${secure1psid}; __Secure-1PSIDTS=${secure1psidts}`
   const bot = new Bard(cookies)
 
   // 使用lodash生成随机字符串充当会话id (如果需要记忆会话，需要携带id)
