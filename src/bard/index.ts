@@ -14,7 +14,9 @@ export async function ask(prompt: string, secure1psid = SECURE_1PSID) {
 
   // 使用lodash生成随机字符串充当会话id (如果需要记忆会话，需要携带id)
   const conversationId = Math.random().toString(36).slice(2)
-  return await bot.ask(prompt, conversationId)
+  const res = await bot.ask(prompt, conversationId)
+  console.log(res)
+  return res
 }
 export type IAskConfig = {
   prompt: string
