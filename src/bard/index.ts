@@ -1,33 +1,53 @@
 import { v1beta2 } from '@google-ai/generativelanguage'
 import { GoogleAuth } from 'google-auth-library'
+import { Bard } from 'googlebard'
 
-const API_KEY = process.env.API_KEY
+const SECURE_1PSID = process.env.SECURE_1PSID
 
-export async function ask(prompt: string, apiKey = API_KEY) {
-  if (!prompt || !apiKey) {
-    throw new Error('Missing required prompt or API_KEY')
+export async function ask(prompt: string, secure1psid = SECURE_1PSID) {
+  if (!prompt || !secure1psid) {
+    throw new Error('Missing required prompt or secure1psid')
   }
 
-  const client = new v1beta2.TextServiceClient({
-    authClient: new GoogleAuth().fromAPIKey(apiKey),
-  })
+  const cookies = `__Secure-1PSID=${secure1psid}`
+  const bot = new Bard(cookies)
 
-  const res = await client
-    .generateText({
-      model: 'models/chat-bison-001',
-      prompt: {
-        text: prompt,
-      },
-    })
-    .then((result) => {
-      return result
-    })
-
-  return res[0].candidates[0].output
+  // 使用lodash生成随机字符串充当会话id (如果需要记忆会话，需要携带id)
+  const conversationId = Math.random().toString(36).slice(2)
+  return await bot.ask(prompt, conversationId)
 }
 export type IAskConfig = {
   prompt: string
-  apiKey?: string
+  secure1psid?: string
 }
+
+// 不支持中文
+// const API_KEY = process.env.API_KEY
+// export async function ask(prompt: string, apiKey = API_KEY) {
+//   if (!prompt || !apiKey) {
+//     throw new Error('Missing required prompt or API_KEY')
+//   }
+
+//   const client = new v1beta2.TextServiceClient({
+//     authClient: new GoogleAuth().fromAPIKey(apiKey),
+//   })
+
+//   const res = await client
+//     .generateText({
+//       model: 'models/text-bison-001',
+//       prompt: {
+//         text: prompt,
+//       },
+//     })
+//     .then((result) => {
+//       return result
+//     })
+
+//   return res[0].candidates[0].output
+// }
+// export type IAskConfig = {
+//   prompt: string
+//   apiKey?: string
+// }
 
 // ask('Hello, world!').then(console.log)

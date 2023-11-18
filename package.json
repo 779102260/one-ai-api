@@ -21,6 +21,7 @@
     "axios": "^1.6.2",
     "cycletls": "^1.0.22",
     "google-auth-library": "^9.2.0",
+    "googlebard": "^1.0.7",
     "openai": "^4.19.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.2.2",
