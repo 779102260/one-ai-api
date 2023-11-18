@@ -40,10 +40,21 @@ export async function ask(prompt: string, orgId = ORG_ID, sessionKey = SESSION_K
     uuid,
     sessionKey,
   )
+
   const cycleTLS = await initCycleTLS() // 模拟浏览器请求
   const response = await cycleTLS
-    .post(`https://claude.ai/api/append_message`, options)
-    .then((res) => res.body)
+    .post(`https://claude.ai/api/append_message`, {
+      headers: {
+        Accept: 'text/event-stream, text/event-stream',
+        Cookie: `sessionKey=${sessionKey}`,
+      },
+      body: JSON.stringify(options.body),
+      timeout: 120,
+    })
+    .then((res) => {
+      console.log(res, res.body)
+      return res.body
+    })
     .then((res) => Util.formatConversion(res))
     .catch((err) => {
       throw new Error(err)
