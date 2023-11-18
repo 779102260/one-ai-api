@@ -6,13 +6,18 @@ const SECURE_1PSID = process.env.SECURE_1PSID
 const SECURE_1PSIDTS = process.env.SECURE_1PSIDTS
 
 export async function ask(prompt: string, secure1psid = SECURE_1PSID, secure1psidts = SECURE_1PSIDTS) {
-  if (!prompt || !secure1psid) {
-    throw new Error('Missing required prompt or secure1psid')
+  if (!prompt || !secure1psid || !secure1psidts) {
+    throw new Error('Missing required prompt or secure1psid or secure1psidts')
   }
 
   const cookies = `__Secure-1PSID=${secure1psid}, __Secure-1PSIDTS=${secure1psidts}`
   console.log(111, cookies)
-  const bot = new Bard(cookies)
+  const bot = new Bard(cookies, {
+    // proxy: {
+    //   host: '127.0.0.1',
+    //   port: 7890,
+    // },
+  })
 
   // 使用lodash生成随机字符串充当会话id (如果需要记忆会话，需要携带id)
   const res = await bot.ask(prompt, 'default')
