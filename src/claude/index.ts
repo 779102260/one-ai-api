@@ -19,7 +19,6 @@ export async function ask(prompt: string, orgId = ORG_ID, sessionKey = SESSION_K
 
   //   获取所有对话
   const all = await Completions.getAll(orgId, sessionKey)
-  console.log(111, all)
   //   删除所有之前生成的对话
   const old = all.filter((m) => m.name.startsWith(CLAUDE_DEFAULT_CONVERSATION_NAME))
   const p = old.map((m) => Completions.del(orgId, m.uuid, sessionKey))
