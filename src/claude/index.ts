@@ -48,7 +48,7 @@ export async function ask(prompt: string, orgId = ORG_ID, sessionKey = SESSION_K
         Accept: 'text/event-stream, text/event-stream',
         Cookie: `sessionKey=${sessionKey}`,
       },
-      body: JSON.stringify(options.body),
+      body: JSON.stringify(body),
       timeout: 120,
     })
     .then((res) => {
