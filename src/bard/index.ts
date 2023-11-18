@@ -14,7 +14,7 @@ export async function ask(prompt: string, apiKey = API_KEY) {
 
   const res = await client
     .generateText({
-      model: 'models/text-bison-001',
+      model: 'models/chat-bison-001',
       prompt: {
         text: prompt,
       },
