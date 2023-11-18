@@ -13,6 +13,6 @@ describe.only('ask function', () => {
   it('should create a new conversation and send a request', async () => {
     const prompt = '翻译成英文：你好，世界'
     const result = await ask(prompt, ORG_ID, SESSION_KEY)
-    expect(result).toBe(/hello/)
+    expect(/hello/i.test(result)).toBe(true)
   })
 })
