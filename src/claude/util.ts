@@ -33,7 +33,7 @@ export const openaiToClaudeRequest = (
   return {
     method: 'POST',
     headers: {
-      Cookie: `sessionKey=${sessionKey}`,
+      Cookie: `sessionKey=Bearer ${sessionKey}`,
     },
     redirect: 'follow',
     body: JSON.stringify({

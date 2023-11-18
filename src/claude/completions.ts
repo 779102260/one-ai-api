@@ -120,7 +120,7 @@ export async function create(
   //   .catch((err: any) => {
   //     throw new Error(`请求错误: ${err.messages}`)
   //   }
-  const data = await fetch(baseUrl, {
+  const data: any = await fetch(baseUrl, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

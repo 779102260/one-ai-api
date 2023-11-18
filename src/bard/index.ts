@@ -12,6 +12,7 @@ export async function ask(prompt: string, secure1psid = SECURE_1PSID, secure1psi
 
   const cookies = `__Secure-1PSID=${secure1psid}, __Secure-1PSIDTS=${secure1psidts}`
   console.log(111, cookies)
+  // 总是不成功，看报错是连接建立失败，可能是服务器地区导致的？
   const bot = new Bard(cookies, {
     // proxy: {
     //   host: '127.0.0.1',
