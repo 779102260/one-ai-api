@@ -1,0 +1,142 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.readerStream = exports.generatePrompt = exports.openaiToClaudeRequest = exports.formatConversion = void 0;
+const uuid_1 = require("uuid");
+/**
+ * 将 claude web api 返回格式转为正常文本内容
+ */
+function formatConversion(result) {
+    try {
+        let content = '';
+        const lines = result.split('\n\n');
+        lines
+            .map((line) => line.replace(/^data: /, '').trim())
+            .filter((line) => line !== '')
+            .forEach((line) => {
+            const te = JSON.parse(line);
+            content += te.completion ? te.completion : '';
+        });
+        return content;
+    }
+    catch (err) {
+        throw new Error(`claude api 响应格式解析错误: ${err.message}`);
+    }
+}
+exports.formatConversion = formatConversion;
+/**
+ * openai 请求体格式转为 cluade 请求体格式
+ */
+const openaiToClaudeRequest = (messages, orgId, conversationId, sessionKey) => {
+    const prompt = (0, exports.generatePrompt)(messages);
+    return {
+        completion: {
+            prompt: prompt,
+            timezone: 'Asia/Shanghai',
+            model: 'claude-2',
+        },
+        organization_uuid: orgId,
+        conversation_uuid: conversationId,
+        text: prompt,
+        attachments: [],
+    };
+};
+exports.openaiToClaudeRequest = openaiToClaudeRequest;
+/**
+ * 生成的 prompt 格式，可参考下述例子
+ *
+ * example 1: "messages": [
+ * {"role": "system", "content":"请输出 json 格式"},
+ * {"role": "user", "content":"今天日期是？"},
+ * {"role": "assistant", "content":"今天是 5 月 30 日。"},
+ * {"role": "user", "content":"今天天气怎么样？"},
+ * {"role": "assistant", "content":"今天是晴天。"},
+ * {"role": "user", "content":"你好"}]
+ * ```
+    Tips:
+    今天日期是？
+    今天是 5 月 30 日。
+    今天天气怎么样？
+    今天是晴天。
+    Please refer to the prompts above for your answer (Return the results of the question):
+    今天的日期，天气如何？（请输出 json 格式）
+ ```
+ * example 2: "messages": [ {"role": "user", "content":"你好，介绍下自己"} ]
+ * ```
+    你好，介绍下自己
+ ```
+ */
+const generatePrompt = (messages) => {
+    if (messages.length < 1) {
+        throw new Error('Request body parameter error, please check if messages is missing.');
+    }
+    let systemPrompt = '';
+    let assistantPrompt = '';
+    let userPrompt = '';
+    const lastMessage = messages.pop();
+    if ('user' != lastMessage.role) {
+        throw new Error('Please check if there is user information in the messages, like {"role": "user", "content": "Hello!"}');
+    }
+    userPrompt = lastMessage.content;
+    for (const msg of messages) {
+        switch (msg.role) {
+            case 'system':
+                systemPrompt = msg.content;
+                break;
+            case 'user':
+            case 'assistant':
+                assistantPrompt = `${msg.content}\n`;
+                break;
+        }
+    }
+    let prompt = '';
+    if (assistantPrompt) {
+        prompt = `Tips: ${assistantPrompt} \nPlease refer to the prompts above for your answer (Return the results of the question):\n`;
+    }
+    prompt += userPrompt;
+    prompt += systemPrompt ? `(${systemPrompt})` : '';
+    return prompt;
+};
+exports.generatePrompt = generatePrompt;
+/**
+ * claude 结果转为 openai api 响应体格式
+ */
+const claudeToOpenaiResponse = (content) => {
+    return JSON.stringify({
+        id: (0, uuid_1.v1)().toString(),
+        object: 'chat.completion',
+        created: Date.parse(new Date().toString()),
+        choices: [
+            {
+                index: 0,
+                message: {
+                    role: 'assistant',
+                    content: content,
+                },
+                finish_reason: 'stop',
+            },
+        ],
+        usage: {
+            prompt_tokens: 0,
+            completion_tokens: 0,
+            total_tokens: 0,
+        },
+    });
+};
+async function readerStream(response) {
+    var _a;
+    const decoder = new TextDecoder('utf-8');
+    const reader = (_a = response.body) === null || _a === void 0 ? void 0 : _a.getReader();
+    let content = '';
+    // eslint-disable-next-line no-constant-condition
+    while (true) {
+        // eslint-disable-next-line no-unsafe-optional-chaining
+        const { done, value } = await (reader === null || reader === void 0 ? void 0 : reader.read());
+        content += decoder.decode(value);
+        if (done) {
+            break;
+        }
+    }
+    return claudeToOpenaiResponse(content);
+}
+exports.readerStream = readerStream;
+//# sourceMappingURL=util.js.map
