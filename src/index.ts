@@ -3,24 +3,46 @@ import * as Azure from './azure'
 import * as Claude from './claude'
 import * as Bard from './bard'
 
-type IConfig = {
-  openai: OpenAI.IAskConfig
-  azure: Azure.IAskConfig
-  claude: Claude.IAskConfig
-  bard: Bard.IAskConfig
+export type IConfig = {
+  openai?: Partial<OpenAI.IAskConfig>
+  azure?: Partial<Azure.IAskConfig>
+  claude?: Partial<Claude.IAskConfig>
+  bard?: Partial<Bard.IAskConfig>
 }
 
 export async function askAuto(prompt: string, config: IConfig) {
+  let answer = ''
+  let ai: keyof IConfig | '' = ''
   if (config.openai) {
-    return OpenAI.ask(prompt, config.openai.apiKey)
+    ai = 'openai'
+    answer = await OpenAI.ask(prompt, config.openai.apiKey).catch((e) => {
+      console.error(`OpenAI error: ${e?.message}`, e)
+      return ''
+    })
   }
-  if (config.azure) {
-    return Azure.ask(prompt, config.azure.endPoint, config.azure.apiKey)
+  if (!answer && config.azure) {
+    ai = 'azure'
+    answer = await Azure.ask(prompt, config.azure.endPoint, config.azure.apiKey).catch((e) => {
+      console.error(`Azure error: ${e?.message}`, e)
+      return ''
+    })
   }
-  if (config.claude) {
-    return Claude.ask(prompt, config.claude.orgId, config.claude.sessionKey)
+  if (!answer && config.claude) {
+    ai = 'claude'
+    answer = await Claude.ask(prompt, config.claude.orgId, config.claude.sessionKey).catch((e) => {
+      console.error(`Claude error: ${e?.message}`, e)
+      return ''
+    })
   }
-  if (config.bard) {
-    return Bard.ask(prompt, config.bard.secure1psid, config.bard.secure1psidts)
+  if (!answer && config.bard) {
+    ai = 'bard'
+    answer = await Bard.ask(prompt, config.bard.secure1psid).catch((e) => {
+      console.error(`Bard error: ${e?.message}`, e)
+      return ''
+    })
+  }
+  return {
+    answer,
+    ai,
   }
 }

@@ -109,8 +109,8 @@ async function create(orgId, sessionKey, opts) {
             Cookie: `sessionKey=${sessionKey}`,
         },
         body: JSON.stringify({
-            uuid: (opts === null || opts === void 0 ? void 0 : opts.uuid) || (0, uuid_1.v1)(),
-            name: (opts === null || opts === void 0 ? void 0 : opts.name) || process.env.CLAUDE_DEFAULT_CONVERSATION_NAME,
+            uuid: opts?.uuid || (0, uuid_1.v1)(),
+            name: opts?.name || process.env.CLAUDE_DEFAULT_CONVERSATION_NAME,
         }),
     })
         .then((res) => res.json())

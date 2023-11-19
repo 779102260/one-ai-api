@@ -123,14 +123,13 @@ const claudeToOpenaiResponse = (content) => {
     });
 };
 async function readerStream(response) {
-    var _a;
     const decoder = new TextDecoder('utf-8');
-    const reader = (_a = response.body) === null || _a === void 0 ? void 0 : _a.getReader();
+    const reader = response.body?.getReader();
     let content = '';
     // eslint-disable-next-line no-constant-condition
     while (true) {
         // eslint-disable-next-line no-unsafe-optional-chaining
-        const { done, value } = await (reader === null || reader === void 0 ? void 0 : reader.read());
+        const { done, value } = await reader?.read();
         content += decoder.decode(value);
         if (done) {
             break;

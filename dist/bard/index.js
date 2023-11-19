@@ -1,7 +1,29 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ask = void 0;
-const googlebard_1 = require("googlebard");
 const SECURE_1PSID = process.env.SECURE_1PSID;
 const SECURE_1PSIDTS = process.env.SECURE_1PSIDTS;
 async function ask(prompt, secure1psid = SECURE_1PSID, secure1psidts = SECURE_1PSIDTS) {
@@ -11,7 +33,8 @@ async function ask(prompt, secure1psid = SECURE_1PSID, secure1psidts = SECURE_1P
     const cookies = `__Secure-1PSID=${secure1psid}, __Secure-1PSIDTS=${secure1psidts}`;
     console.log(111, cookies);
     // 总是不成功，看报错是连接建立失败，可能是服务器地区导致的？
-    const bot = new googlebard_1.Bard(cookies, {
+    const { Bard } = await Promise.resolve().then(() => __importStar(require('googlebard')));
+    const bot = new Bard(cookies, {
     // proxy: {
     //   host: '127.0.0.1',
     //   port: 7890,

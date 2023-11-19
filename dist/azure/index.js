@@ -14,7 +14,6 @@ const API_KEY = process.env.API_KEY;
  * @param apiKey
  */
 async function ask(prompt, endPoint = END_POINT, apiKey = API_KEY) {
-    var _a, _b, _c;
     try {
         if (!endPoint || !apiKey) {
             throw new Error('Missing required END_POINT or API_KEY');
@@ -34,7 +33,7 @@ async function ask(prompt, endPoint = END_POINT, apiKey = API_KEY) {
         };
         const { data } = await axios_1.default.post(endPoint, body, { headers });
         // 处理toomany request情况
-        const content = (_c = (_b = (_a = data === null || data === void 0 ? void 0 : data.choices) === null || _a === void 0 ? void 0 : _a[0]) === null || _b === void 0 ? void 0 : _b.message) === null || _c === void 0 ? void 0 : _c.content;
+        const content = data?.choices?.[0]?.message?.content;
         if (!content || /^.429/.test(content)) {
             throw new Error(content);
         }

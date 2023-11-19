@@ -12,7 +12,6 @@ const API_KEY = process.env.API_KEY;
  * @param apiKey API_KEY 应该从环境变量中获取
  */
 async function ask(prompt, apiKey = API_KEY) {
-    var _a, _b, _c;
     try {
         if (!apiKey) {
             throw new Error('Missing required API_KEY');
@@ -25,7 +24,7 @@ async function ask(prompt, apiKey = API_KEY) {
             model: 'gpt-3.5-turbo',
         });
         // 处理toomany request情况
-        const content = (_c = (_b = (_a = chatCompletion === null || chatCompletion === void 0 ? void 0 : chatCompletion.choices) === null || _a === void 0 ? void 0 : _a[0]) === null || _b === void 0 ? void 0 : _b.message) === null || _c === void 0 ? void 0 : _c.content;
+        const content = chatCompletion?.choices?.[0]?.message?.content;
         if (!content || /^.429/.test(content)) {
             throw new Error(content);
         }
