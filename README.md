@@ -5,12 +5,12 @@ Currently does not support streaming. If you are interested, you can submit a me
 ## useage
 
 1. install
-```
+```shell
 pnpm i one-ai-api
 ```
 
 2. use
-```
+```typescript
 import {ask} from one-ai-api
 
 // If the OpenAI API call fails, automatically call the Azure API, and so on.
