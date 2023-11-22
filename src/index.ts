@@ -22,7 +22,7 @@ export async function askAuto(prompt: string, config: IConfig) {
   }
   if (!answer && config.azure) {
     ai = 'azure'
-    answer = await Azure.ask(prompt, config.azure.endPoint, config.azure.apiKey).catch((e) => {
+    answer = await Azure.ask(prompt, config.azure.apiKey, config.azure.config).catch((e) => {
       console.error(`Azure error: ${e?.message}`, e)
       return ''
     })

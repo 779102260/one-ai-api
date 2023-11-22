@@ -1,37 +1,38 @@
-import axios from 'axios'
+import OpenAI, { ClientOptions } from 'openai'
+import queryString from 'query-string'
+import url from 'url'
 
 const END_POINT = process.env.END_POINT
 const API_KEY = process.env.API_KEY
 
 /**
  * 单次对话，无上下文，无stream
- * @param prompt
- * @param endPoint
- * @param apiKey
  */
-export async function ask(prompt: string, endPoint = END_POINT, apiKey = API_KEY) {
+export async function ask(prompt: string, apiKey = API_KEY, config: ClientOptions = {}) {
   try {
-    if (!endPoint || !apiKey) {
+    if (!(config.baseURL && !END_POINT) || !apiKey) {
       throw new Error('Missing required END_POINT or API_KEY')
     }
+    if (!config.baseURL) {
+      config.baseURL = END_POINT
+    }
 
-    const body = {
-      messages: [{ role: 'system', content: prompt }],
-      max_tokens: 800,
-      temperature: 0.7,
-      frequency_penalty: 0,
-      presence_penalty: 0,
-      top_p: 0.95,
-      stop: null,
-    }
-    const headers = {
-      'Content-Type': 'application/json',
-      'api-key': apiKey,
-    }
-    const { data } = await axios.post(endPoint, body, { headers })
+    const endPoint = new url.URL(config.baseURL)
+    const parsed = queryString.parse(endPoint.search)
+    const openai = new OpenAI({
+      apiKey,
+      defaultQuery: { 'api-version': parsed['api-version'] as string },
+      defaultHeaders: { 'api-key': apiKey },
+      ...config,
+    })
+
+    const chatCompletion = await openai.chat.completions.create({
+      messages: [{ role: 'user', content: prompt }],
+      model: 'gpt-3.5-turbo',
+    })
 
     // 处理toomany request情况
-    const content = data?.choices?.[0]?.message?.content
+    const content = chatCompletion?.choices?.[0]?.message?.content
     if (!content || /^.429/.test(content)) {
       throw new Error(content)
     }
@@ -44,8 +45,8 @@ export async function ask(prompt: string, endPoint = END_POINT, apiKey = API_KEY
 }
 export type IAskConfig = {
   prompt: string
-  endPoint?: string
   apiKey?: string
+  config: ClientOptions
 }
 
 // conversation("Hello, world!").then(response => console.log(response));

@@ -1,4 +1,4 @@
-import OpenAI from 'openai'
+import OpenAI, { ClientOptions } from 'openai'
 
 const API_KEY = process.env.API_KEY
 
@@ -7,13 +7,14 @@ const API_KEY = process.env.API_KEY
  * @param prompt 问题
  * @param apiKey API_KEY 应该从环境变量中获取
  */
-export async function ask(prompt: string, apiKey = API_KEY) {
+export async function ask(prompt: string, apiKey = API_KEY, config: ClientOptions = {}) {
   try {
     if (!apiKey) {
       throw new Error('Missing required API_KEY')
     }
     const openai = new OpenAI({
       apiKey: apiKey || API_KEY,
+      ...config,
     })
     const chatCompletion = await openai.chat.completions.create({
       messages: [{ role: 'user', content: prompt }],
@@ -35,6 +36,7 @@ export async function ask(prompt: string, apiKey = API_KEY) {
 export type IAskConfig = {
   prompt: string
   apiKey?: string
+  config?: ClientOptions
 }
 
 // ask('Hello, world!').then((response) => console.log(response))
