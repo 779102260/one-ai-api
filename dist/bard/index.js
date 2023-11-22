@@ -31,8 +31,7 @@ async function ask(prompt, secure1psid = SECURE_1PSID, secure1psidts = SECURE_1P
         throw new Error('Missing required prompt or secure1psid or secure1psidts');
     }
     const cookies = `__Secure-1PSID=${secure1psid}, __Secure-1PSIDTS=${secure1psidts}`;
-    console.log(111, cookies);
-    // 总是不成功，看报错是连接建立失败，可能是服务器地区导致的？
+    // 这是个esm模块
     const { Bard } = await Promise.resolve().then(() => __importStar(require('googlebard')));
     const bot = new Bard(cookies, {
     // proxy: {

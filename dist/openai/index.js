@@ -11,13 +11,14 @@ const API_KEY = process.env.API_KEY;
  * @param prompt 问题
  * @param apiKey API_KEY 应该从环境变量中获取
  */
-async function ask(prompt, apiKey = API_KEY) {
+async function ask(prompt, apiKey = API_KEY, config = {}) {
     try {
         if (!apiKey) {
             throw new Error('Missing required API_KEY');
         }
         const openai = new openai_1.default({
             apiKey: apiKey || API_KEY,
+            ...config,
         });
         const chatCompletion = await openai.chat.completions.create({
             messages: [{ role: 'user', content: prompt }],
