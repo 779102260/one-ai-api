@@ -1,5 +1,4 @@
 import OpenAI, { ClientOptions } from 'openai'
-import queryString from 'query-string'
 import url from 'url'
 
 const END_POINT = process.env.END_POINT
