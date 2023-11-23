@@ -52,7 +52,6 @@ export async function ask(prompt: string, orgId = ORG_ID, sessionKey = SESSION_K
       timeout: 120,
     })
     .then((res) => {
-      console.log(res, res.body)
       return res.body
     })
     .then((res) => Util.formatConversion(res))
