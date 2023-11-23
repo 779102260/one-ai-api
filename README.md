@@ -17,6 +17,7 @@ import {ask} from one-ai-api
 
 // If the OpenAI API call fails, automatically call the Azure API, and so on.
 ask('hello', {
+    order: ['openai', 'claude', 'bard', 'azure'], // 排序，可选
     openai: {
         apiKey: 'sk-xxxxx' // get from openai
     },
@@ -31,6 +32,7 @@ ask('hello', {
     bard: {
         secure1psid: string, // get from cookie
         secure1psidts: string  // get from cookie
-    }
+    },
+    debugger: true // 打印错误日志
 })
 ```
