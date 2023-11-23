@@ -18,6 +18,7 @@ export async function ask(prompt: string, apiKey = API_KEY, config: ClientOption
     }
 
     const endPoint = new url.URL(config.baseURL)
+    const queryString = (await import('query-string')).default
     const parsed = queryString.parse(endPoint.search)
     const openai = new OpenAI({
       apiKey,
