@@ -34,7 +34,7 @@ export const openaiToClaudeRequest = (
     completion: {
       prompt: prompt,
       timezone: 'Asia/Shanghai',
-      model: 'claude-2',
+      model: 'claude-2.1',
     },
     organization_uuid: orgId,
     conversation_uuid: conversationId,
