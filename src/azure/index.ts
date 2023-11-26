@@ -9,11 +9,11 @@ const API_KEY = process.env.API_KEY
  */
 export async function ask(prompt: string, apiKey = API_KEY, config: ClientOptions = {}) {
   try {
-    if (!(config.baseURL && !END_POINT) || !apiKey) {
-      throw new Error('Missing required END_POINT or API_KEY')
-    }
     if (!config.baseURL) {
       config.baseURL = END_POINT
+    }
+    if (!config.baseURL || !apiKey) {
+      throw new Error('Missing required END_POINT or API_KEY')
     }
 
     const endPoint = new url.URL(config.baseURL)
@@ -34,7 +34,7 @@ export async function ask(prompt: string, apiKey = API_KEY, config: ClientOption
     // 处理toomany request情况
     const content = chatCompletion?.choices?.[0]?.message?.content
     if (!content || /^.429/.test(content)) {
-      throw new Error(content)
+      throw new Error(content || '未知错误')
     }
 
     return content

@@ -1,7 +1,7 @@
-import * as OpenAI from './openai';
-import * as Azure from './azure';
-import * as Claude from './claude';
-import * as Bard from './bard';
+import * as OpenAI from './openai/index';
+import * as Azure from './azure/index';
+import * as Claude from './claude/index';
+import * as Bard from './bard/index';
 export type IConfig = {
     order?: ('openai' | 'claude' | 'bard' | 'azure')[];
     openai?: Partial<OpenAI.IAskConfig>;

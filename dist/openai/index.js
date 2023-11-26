@@ -27,7 +27,7 @@ async function ask(prompt, apiKey = API_KEY, config = {}) {
         // 处理toomany request情况
         const content = chatCompletion?.choices?.[0]?.message?.content;
         if (!content || /^.429/.test(content)) {
-            throw new Error(content);
+            throw new Error(content || '未知错误');
         }
         return content;
     }
@@ -37,5 +37,4 @@ async function ask(prompt, apiKey = API_KEY, config = {}) {
     }
 }
 exports.ask = ask;
-// ask('Hello, world!').then((response) => console.log(response))
 //# sourceMappingURL=index.js.map

@@ -14,7 +14,7 @@ export declare const openaiToClaudeRequest: (messages: Message[], orgId: string,
     organization_uuid: string;
     conversation_uuid: string;
     text: string;
-    attachments: any[];
+    attachments: never[];
 };
 /**
  * 生成的 prompt 格式，可参考下述例子

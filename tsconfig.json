@@ -1,26 +1,20 @@
 {
-    "compilerOptions": {
-      "target": "ESNext",
-      "module": "commonjs",
-      "moduleResolution": "node",
-      "lib": ["ESNext"],
-      "strict": true,
-      "strictNullChecks": false,
-      "sourceMap": true,
-      "importHelpers": false,
-      "experimentalDecorators": true,
-      "noImplicitAny": false,
-      "noImplicitThis": false,
-      "esModuleInterop": true,
-      "jsx": "react",
-      "allowJs": true,
-      "declaration": true,
-      "outDir": "./dist",
-      "baseUrl": "./",
-      "resolveJsonModule": true,
-      "paths": {
-        "@src/*": ["src/*"]
-      }
-    },
-    "include": ["./src"]
-  }
+  "compilerOptions": {
+    "target": "ESNext", // 打包后的js版本
+    "module": "ESNext", // 打包后的js模块系统
+    "moduleResolution": "node", // import模块先从node_modules查找
+    "lib": ["ESNext"], // 项目中用到了哪些lib，比如在浏览器中有DOM对象等，在node中有path等
+    "strict": true, // 严格检查类型，开就对了
+    "noImplicitAny": false, // 不指定类型时默认为any
+    "sourceMap": true,
+    "esModuleInterop": true, // esm使用cjs模块时，true开启相当于import xx from 'xx' 相当于 import * as xx from 'xx'
+    "declaration": true, // 生成类型声明文件
+    "outDir": "./dist", // 打包后的目录
+    "baseUrl": "./", // 相对路径导计算的起点
+    "resolveJsonModule": true, // 允许导入json
+    "paths": { // 路径映射，基于baseUrl计算
+      "@src/*": ["src/*"]
+    }
+  },
+  "include": ["./src"]
+}

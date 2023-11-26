@@ -24,10 +24,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.askAuto = void 0;
-const OpenAI = __importStar(require("./openai"));
-const Azure = __importStar(require("./azure"));
-const Claude = __importStar(require("./claude"));
-const Bard = __importStar(require("./bard"));
+const OpenAI = __importStar(require("./openai/index"));
+const Azure = __importStar(require("./azure/index"));
+const Claude = __importStar(require("./claude/index"));
+const Bard = __importStar(require("./bard/index"));
 async function askAuto(prompt, config) {
     const { order = ['openai', 'claude', 'bard', 'azure'], degguer, openai, azure, claude, bard } = config;
     for (const name of order) {

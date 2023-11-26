@@ -24,7 +24,7 @@ export async function ask(prompt: string, apiKey = API_KEY, config: ClientOption
     // 处理toomany request情况
     const content = chatCompletion?.choices?.[0]?.message?.content
     if (!content || /^.429/.test(content)) {
-      throw new Error(content)
+      throw new Error(content || '未知错误')
     }
 
     return content
@@ -38,5 +38,3 @@ export type IAskConfig = {
   apiKey?: string
   config?: ClientOptions
 }
-
-// ask('Hello, world!').then((response) => console.log(response))

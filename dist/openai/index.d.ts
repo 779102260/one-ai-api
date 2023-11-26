@@ -4,7 +4,7 @@ import { ClientOptions } from 'openai';
  * @param prompt 问题
  * @param apiKey API_KEY 应该从环境变量中获取
  */
-export declare function ask(prompt: string, apiKey?: string, config?: ClientOptions): Promise<string>;
+export declare function ask(prompt: string, apiKey?: string | undefined, config?: ClientOptions): Promise<string>;
 export type IAskConfig = {
     prompt: string;
     apiKey?: string;
