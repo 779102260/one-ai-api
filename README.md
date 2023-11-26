@@ -1,11 +1,20 @@
-Combines multiple AI interfaces into one, support openai/azure/claude/bard.
+## Description
+Unified AI Interface
+ 
+Supports
+- OpenAI
+- Azure
+- Claude (web api)
+- Bard (web api)
 
-Currently does not support streaming. If you are interested, you can submit a merge request (MR). 
+If you need to integrate other SDKs, please submit an issue or a pull request.
 
-- support cloudfare ai gateway
 
-## useage
+## Todo
+⭕️ Supports streaming
 
+
+## Usage
 1. install
 ```shell
 pnpm i one-ai-api
@@ -17,13 +26,16 @@ import {ask} from one-ai-api
 
 // If the OpenAI API call fails, automatically call the Azure API, and so on.
 ask('hello', {
-    order: ['openai', 'claude', 'bard', 'azure'], // 排序，可选
+    order: ['openai', 'claude', 'bard', 'azure'], // specify the AI you want to use and the order of their usage.
     openai: {
         apiKey: 'sk-xxxxx' // get from openai
     },
     azure: {
-        endPoint?: string, // get from azure
         apiKey?: string // get from azure
+        config: {
+            baseURL: 'xxx' // endPoint, get from azure
+            // ...
+        }
     },
     claude: {
         orgId: string, // get from api [orgId]/chat_conversations
@@ -33,6 +45,9 @@ ask('hello', {
         secure1psid: string, // get from cookie
         secure1psidts: string  // get from cookie
     },
-    debugger: true // 打印错误日志
+    debugger: true // enable log
 })
 ```
+
+## Contributing
+Welcome contributions to the One AI API project. If you have suggestions or improvements, please submit a pull request with your proposed changes.
