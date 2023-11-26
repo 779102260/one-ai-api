@@ -1,19 +1,34 @@
 {
   "name": "one-ai-api",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "",
-  "main": "dist/index.js",
+  "main": "cjs/index.js",
   "exports": {
-    ".": "./dist/index.js",
-    "./openai": "./dist/openai/index.js",
-    "./bard": "./dist/bard/index.js",
-    "./azure": "./dist/azure/index.js",
-    "./claude": "./dist/claude/index.js"
+    ".": {
+      "require": "./cjs/index.js",
+      "import": "./esm/index.js"
+    },
+    "./openai": {
+      "require": "./cjs/openai/index.js",
+      "import": "./esm/openai/index.js"
+    },
+    "./bard": {
+      "require": "./cjs/bard/index.js",
+      "import": "./esm/bard/index.js"
+    },
+    "./azure": {
+      "require": "./cjs/azure/index.js",
+      "import": "./esm/azure/index.js"
+    },
+    "./claude": {
+      "require": "./cjs/claude/index.js",
+      "import": "./esm/claude/index.js"
+    }
   },
   "scripts": {
-    "build": "rm -rf dist && npm run build-cjs",
-    "build-cjs": "tsc --project tsconfig.cjs.json",
-    "build-esm": "tsc --project tsconfig.json",
+    "build": "sh build.sh",
+    "build:cjs": "tsc --project tsconfig.cjs.json",
+    "build:esm": "tsc --project tsconfig.json",
     "test": "vitest"
   },
   "repository": {

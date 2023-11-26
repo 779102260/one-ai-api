@@ -1,5 +1,5 @@
 import OpenAI, { ClientOptions } from 'openai'
-import url from 'url'
+import * as url from 'url'
 
 const END_POINT = process.env.END_POINT
 const API_KEY = process.env.API_KEY

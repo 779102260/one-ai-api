@@ -7,9 +7,8 @@
     "strict": true, // 严格检查类型，开就对了
     "noImplicitAny": false, // 不指定类型时默认为any
     "sourceMap": true,
-    "esModuleInterop": true, // esm使用cjs模块时，true开启相当于import xx from 'xx' 相当于 import * as xx from 'xx'
     "declaration": true, // 生成类型声明文件
-    "outDir": "./dist", // 打包后的目录
+    "outDir": "./esm", // 打包后的目录
     "baseUrl": "./", // 相对路径导计算的起点
     "resolveJsonModule": true, // 允许导入json
     "paths": { // 路径映射，基于baseUrl计算

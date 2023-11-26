@@ -1,35 +1,6 @@
-"use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.ask = void 0;
-const Completions = __importStar(require("./completions"));
-const cycletls_1 = __importDefault(require("cycletls"));
-const Util = __importStar(require("./util"));
+import * as Completions from './completions.js'
+import initCycleTLS from 'cycletls';
+import * as Util from './util.js'
 const ORG_ID = process.env.ORG_ID; // 从Claude官网中的/ORG_ID/chat_conversations接口中获取
 const SESSION_KEY = process.env.SESSION_KEY; // 从cookie中获取
 const CLAUDE_DEFAULT_CONVERSATION_NAME = 'claude';
@@ -39,7 +10,7 @@ const CLAUDE_DEFAULT_CONVERSATION_NAME = 'claude';
  * @param orgId ORG_ID 应该从环境变量中获取
  * @param sessionKey SESSION_KEY 应该从环境变量中获取
  */
-async function ask(prompt, orgId = ORG_ID, sessionKey = SESSION_KEY) {
+export async function ask(prompt, orgId = ORG_ID, sessionKey = SESSION_KEY) {
     if (!prompt || !orgId || !sessionKey) {
         throw new Error('参数错误');
     }
@@ -60,7 +31,7 @@ async function ask(prompt, orgId = ORG_ID, sessionKey = SESSION_KEY) {
             content: prompt,
         },
     ], orgId, uuid, sessionKey);
-    const cycleTLS = await (0, cycletls_1.default)(); // 模拟浏览器请求
+    const cycleTLS = await initCycleTLS(); // 模拟浏览器请求
     const response = await cycleTLS
         .post(`https://claude.ai/api/append_message`, {
         headers: {
@@ -80,5 +51,4 @@ async function ask(prompt, orgId = ORG_ID, sessionKey = SESSION_KEY) {
     cycleTLS.exit();
     return response;
 }
-exports.ask = ask;
 //# sourceMappingURL=index.js.map

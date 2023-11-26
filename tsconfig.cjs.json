@@ -2,6 +2,6 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "module": "CommonJS", // 打包后的js模块系统
-    "outDir": "./dist", // 打包后的目录
+    "outDir": "./cjs", // 打包后的目录
   }
 }
