@@ -15,10 +15,10 @@ export type IConfig = {
 }
 
 export async function askAuto(prompt: string, config: IConfig) {
-  const { order = ['openai', 'claude', 'bard', 'azure'], degguer } = config
+  const { order = ['openai', 'claude', 'bard', 'azure'], degguer, openai, azure, claude, bard } = config
   for (const name of order) {
-    if (name === 'openai' && config.openai) {
-      const answer = await OpenAI.ask(prompt, config.openai.apiKey).catch((error) => {
+    if (name === 'openai' && openai) {
+      const answer = await OpenAI.ask(prompt, openai.apiKey, openai.config).catch((error) => {
         degguer && console.error(error)
         return ''
       })
@@ -26,8 +26,8 @@ export async function askAuto(prompt: string, config: IConfig) {
         return { answer, ai: name }
       }
     }
-    if (name === 'azure' && config.azure) {
-      const answer = await Azure.ask(prompt, config.azure.apiKey, config.azure.config).catch((error) => {
+    if (name === 'azure' && azure) {
+      const answer = await Azure.ask(prompt, azure.apiKey, azure.config).catch((error) => {
         degguer && console.error(error)
         return ''
       })
@@ -35,8 +35,8 @@ export async function askAuto(prompt: string, config: IConfig) {
         return { answer, ai: name }
       }
     }
-    if (name === 'claude' && config.claude) {
-      const answer = await Claude.ask(prompt, config.claude.orgId, config.claude.sessionKey).catch((error) => {
+    if (name === 'claude' && claude) {
+      const answer = await Claude.ask(prompt, claude.orgId, claude.sessionKey).catch((error) => {
         degguer && console.error(error)
         return ''
       })
@@ -44,8 +44,8 @@ export async function askAuto(prompt: string, config: IConfig) {
         return { answer, ai: name }
       }
     }
-    if (name === 'bard' && config.bard) {
-      const answer = await Bard.ask(prompt, config.bard.secure1psid).catch((error) => {
+    if (name === 'bard' && bard) {
+      const answer = await Bard.ask(prompt, bard.secure1psid, bard.secure1psidts).catch((error) => {
         degguer && console.error(error)
         return ''
       })
