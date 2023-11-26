@@ -11,6 +11,7 @@ If you need to integrate other SDKs, please submit an issue or a pull request.
 
 
 ## Todo
+✅ Supports cloudflare ai gateway
 ⭕️ Supports streaming
 
 
@@ -28,7 +29,10 @@ import {ask} from one-ai-api
 ask('hello', {
     order: ['openai', 'claude', 'bard', 'azure'], // specify the AI you want to use and the order of their usage.
     openai: {
-        apiKey: 'sk-xxxxx' // get from openai
+        apiKey: 'sk-xxxxx', // get from openai
+        config: { // openai sdk config
+            // ...
+        }
     },
     azure: {
         apiKey?: string // get from azure
