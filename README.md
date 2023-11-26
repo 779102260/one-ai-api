@@ -12,6 +12,7 @@ If you need to integrate other SDKs, please submit an issue or a pull request.
 
 ## Todo
 ✅ Supports cloudflare ai gateway
+
 ⭕️ Supports streaming
 
 
