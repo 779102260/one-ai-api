@@ -54,5 +54,12 @@ ask('hello', {
 })
 ```
 
+You can also use it separately
+```typescript
+import {ask} from "one-ai-api/openai";
+const prompt = 'hello'
+const result = await ask(prompt, 'sk-xxx')
+```
+
 ## Contributing
 Welcome contributions to the One AI API project. If you have suggestions or improvements, please submit a pull request with your proposed changes.
