@@ -14,7 +14,7 @@ export type IConfig = {
 }
 
 export async function askAuto(prompt: string, config: IConfig) {
-  const { order = ['openai', 'claude', 'bard', 'azure'], degguer, openai, azure, claude, bard } = config
+  const { order = ['openai', 'bard', 'claude', 'azure'], degguer, openai, azure, claude, bard } = config
   for (const name of order) {
     if (name === 'openai' && openai) {
       const answer = await OpenAI.ask(prompt, openai.apiKey, openai.config).catch((error) => {
@@ -44,7 +44,7 @@ export async function askAuto(prompt: string, config: IConfig) {
       }
     }
     if (name === 'bard' && bard) {
-      const answer = await Bard.ask(prompt, bard.secure1psid, bard.secure1psidts).catch((error) => {
+      const answer = await Bard.ask(prompt, bard.apiKey).catch((error) => {
         degguer && console.error(error)
         return ''
       })

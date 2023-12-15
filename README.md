@@ -28,7 +28,7 @@ import {ask} from one-ai-api
 
 // If the OpenAI API call fails, automatically call the Azure API, and so on.
 ask('hello', {
-    order: ['openai', 'claude', 'bard', 'azure'], // specify the AI you want to use and the order of their usage.
+    order: ['openai', 'bard', 'claude', 'azure'], // specify the AI you want to use and the order of their usage.
     openai: {
         apiKey: 'sk-xxxxx', // get from openai
         config: { // openai sdk config
@@ -47,8 +47,7 @@ ask('hello', {
         sessionKey: string // get from cookie
     },
     bard: {
-        secure1psid: string, // get from cookie
-        secure1psidts: string  // get from cookie
+        apiKey: 'xxxxx', // get from https://makersuite.google.com/app/apikey
     },
     debugger: true // enable log
 })
