@@ -21,6 +21,6 @@ export declare function askAuto(prompt: string, config: IConfig): Promise<{
     answer: string;
     ai: "claude";
 } | {
-    answer: any;
+    answer: string;
     ai: "bard";
 }>;

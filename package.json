@@ -1,6 +1,6 @@
 {
   "name": "one-ai-api",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "",
   "main": "cjs/index.js",
   "exports": {
@@ -26,7 +26,7 @@
     }
   },
   "scripts": {
-    "build": "sh build.sh",
+    "build": "sh build.bash",
     "build:cjs": "tsc --project tsconfig.cjs.json",
     "build:esm": "tsc --project tsconfig.json",
     "test": "vitest"
