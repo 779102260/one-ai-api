@@ -24,10 +24,10 @@ pnpm i one-ai-api
 
 2. use
 ```typescript
-import {ask} from one-ai-api
+import {askAuto} from one-ai-api
 
 // If the OpenAI API call fails, automatically call the Azure API, and so on.
-ask('hello', {
+askAuto('hello', {
     order: ['openai', 'bard', 'claude', 'azure'], // specify the AI you want to use and the order of their usage.
     openai: {
         apiKey: 'sk-xxxxx', // get from openai
